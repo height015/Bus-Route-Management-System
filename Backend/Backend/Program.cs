@@ -1,9 +1,23 @@
+using BRMSAPI.Configuration;
+using BRMSAPI.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+ConfigurationManager configuration = builder.Configuration;
+
+
+var connection = configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<AppDbContext>(x => x.UseNpgsql(connection));
+
+builder.Services.AddExtDataServices(configuration);
+
+
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -23,3 +37,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

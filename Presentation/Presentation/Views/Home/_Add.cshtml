@@ -1,0 +1,147 @@
+﻿
+@model LocationVM
+@{
+    ViewData["Title"] = "Create Location";
+    Layout = null;
+    var error = ViewBag.Error as string;
+    var hasError = !string.IsNullOrEmpty(error);
+
+    var displayVal = ViewData["_Display"] as string;
+    var isVisible = true;
+    if (!string.IsNullOrEmpty(displayVal) && displayVal.IsNumeric())
+    {
+        if (int.Parse(displayVal) == -1)
+        {
+            isVisible = false;
+        }
+    }
+
+
+
+}
+
+
+@if (!isVisible)
+{
+}
+else
+{
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Add New</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="popupViewDiv">
+                <div id="popupViewDiv">
+                    <form method="post" class="needs-validation" id="frmAdd" novalidate>
+                        <div class="modal-body">
+
+                            @if (hasError)
+                            {
+                                <div class="form-group">
+                                    <div class="alert alert-danger">@Html.Raw(error)</div>
+                                </div>
+                            }
+
+                            <div id="dvError"></div>
+
+                            <div class="row">
+                                <div class="col-sm-6 mb-3">
+                                    <label for="sectitle">Title<span style="color: red">*</span> </label>
+                                    <input type="text" class="form-control" aria-describedby="sectitle"
+                                           asp-for="LocationTitle"  data-error-message="Location Title is required" required>
+                                    <span asp-frm-validation="LocationTitle" id="LocationTitle"></span>
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="sectitle">LCDA <span style="color: red">*</span> </label>
+
+                                    <input type="text" class="form-control" aria-describedby="sectitle"
+                                           asp-for="LCDA"
+                                           data-error-message="LCDA is required" placeholder="Local Gov Area" required>
+                                    <span asp-frm-validation="LCDA" id="titleError"></span>
+                                </div>
+                            </div>
+
+                            <div class="row pt-2">
+                                <div class="col-sm-6 mb-3">
+                                    <label for="secDescription">City <span style="color: red">*</span> </label>
+                                    <input type="text" class="form-control" aria-describedby="sectitle"
+                                           asp-for="City" required>
+                                    <span asp-frm-validation="City" id="describError"></span>
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="secDescription">Area <span style="color: red">*</span> </label>
+                                    <input type="text" class="form-control" aria-describedby="sectitle"
+                                           asp-for="Area" data-error-message="Area is required" required>
+                                    <span asp-frm-validation="Area" id="describError"></span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row pt-2">
+                                <div class="col-sm-6 mb-3">
+                                    <label for="secDescription">Phone <span style="color: red">*</span> </label>
+                                    <input type="tel" class="form-control" aria-describedby="sectitle"
+                                           asp-for="PhoneNumber" data-error-message="Valid Phone Number is required" required>
+                                    <span asp-frm-validation="PhoneNumber" id="describError"></span>
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="secDescription">Email <span style="color: red">*</span> </label>
+                                    <input type="email" class="form-control" aria-describedby="sectitle"
+                                           asp-for="EmailAddress" data-error-message="Valid Email address is required" required>
+                                    <span asp-frm-validation="EmailAddress" id="describError"></span>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="row pt-2">
+                                <div class="col-sm-6 mb-3">
+                                    <label for="secDescription">Description <span style="color: red">*</span> </label>
+                                    <textarea class="form-control" aria-describedby="sectitle" asp-for="LocationDescription"  data-error-message="Description is required" required></textarea>
+                                    <span asp-frm-validation="LocationDescription" id="describError"></span>
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="secDescription">Landmark <span style="color: red">*</span> </label>
+                                    <textarea class="form-control" aria-describedby="sectitle"
+                                              asp-for="Landmark"  data-error-message="Landmark is required" required></textarea>
+                                    <span asp-frm-validation="Landmark" id="describError"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" value="Submit" id="btnSave" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="@Url.Content("~/Page/home-script.js")"></script>
+
+<script>
+    (function () {
+
+        var jServe = homeService();
+        if (jServe === null || !jServe.isValid()) {
+            ShowErrorAlert("Initialization Failed!");
+            return false;
+        }
+
+        const check = _("btnSave");
+    
+
+        check.onSavePopupData("frmAdd", "process-add");
+
+       
+
+   
+
+    })();</script>
+

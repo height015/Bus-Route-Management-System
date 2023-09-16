@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> @ViewData["Title"] - Build Free Test For Height</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Portal Admin Dashboard Template For Developers">
+    <meta name="author" content="Height Media">
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="@Url.Content("~/css/custom/customx.css")" />
+    <!-- FontAwesome JS-->
+    <script defer src="@Url.Content("~/assets/plugins/fontawesome/js/all.min.js")"></script>
+
+    <!-- App CSS -->
+    <link id="theme-style" rel="stylesheet" href="@Url.Content("~/assets/css/portal.css")">
+
+</head>
+
+<body class="app">
+
+    <header class="app-header fixed-top">
+
+        <div class="app-header-inner">
+            @await Html.PartialAsync("_TopNav")
+        </div>
+        <div id="app-sidepanel" class="app-sidepanel">
+            @await Html.PartialAsync("_SideNav")
+        </div>
+    </header>
+
+    <div class="app-wrapper">
+        @RenderBody()
+    </div>
+
+
+    <footer class="app-footer">
+        @await Html.PartialAsync("_Footer")
+    </footer>
+
+
+</body>
+
+@await Html.PartialAsync("_ScriptServiceManager")
+@await RenderSectionAsync("Scripts", required: false)
+
+</html>

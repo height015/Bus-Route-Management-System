@@ -1,8 +1,48 @@
 ﻿@{
+    Layout = "_LayoutFrame";
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
+    <a href="@Url.Action("",  RouteHelper.Home, new { Area = ""})"
+       Back
+     </a>
 </div>
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <a href="@Url.Action("_add",  RouteHelper.Home, new { Area = ""})"
+               data-popup="" class="btn btn-sm btn-outline-secondary"> <span data-feather="plus" class="align-text-bottom"></span> New Item</a>
+
+        </div>
+    </div>
+</div>
+
+<script>document.addEventListener("DOMContentLoaded", function () {
+
+    console.log("Home Page");
+
+    });</script>
+
+
+@section Scripts{
+    <script src="@Url.Content("~/Page/home-script.js")"></script>
+    <script>
+        (function () {
+    var jServe = homeService();
+            if (jServe === null || !jServe.isValid()) {
+                ShowErrorAlert("Initialization Failed!");
+                return false;
+            }
+
+            //loadView();
+
+        })();</script>
+}

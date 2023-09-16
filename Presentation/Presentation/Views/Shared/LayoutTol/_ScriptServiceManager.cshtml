@@ -1,0 +1,115 @@
+﻿<div class="modal" id="dvModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="modalContent"></div>
+</div>
+
+@*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/dist/js/bootstrap.bundle.min.js"></script>*@
+@*<script src="~/assets/dist/js/feather.min.js"></script>
+    <script src="~/assets/js/feather-home.js"></script>
+    <script src="~/assets/dist/js/chart.umd.min.js"></script>
+
+    <script src="~/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/assets/datatables/dataTables.bootstrap.min.js"></script>*@
+
+
+@*// USED BY PORTAL *@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src=@Url.Content($"~/tools-js/mxtool.js")></script>
+<script src=@Url.Content($"~/tools-js/commonx.js")></script>
+
+<script src="@Url.Content("~/assets/plugins/popper.min.js")"></script>
+<script src="@Url.Content("assets/plugins/bootstrap/js/bootstrap.min.js")"></script>
+
+
+
+
+<script>async function fetchSetup() {
+        setupClickEvent();
+        setupModalHideEvent();
+    }
+
+    function setupClickEvent() {
+        document.querySelectorAll("a[data-popup]").forEach(function (link) {
+            link.addEventListener("click", async function (e) {
+                e.preventDefault();
+                var closestBtnGroup = e.target.closest('.btn-group');
+                if (closestBtnGroup) {
+                    var dropdownToggle = closestBtnGroup.querySelector('.dropdown-toggle');
+                    if (dropdownToggle) {
+                        dropdownToggle.click();
+                    }
+                }
+
+                try {
+                    const response = await fetch(link.href);
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    const data = await response.text();
+                    document.getElementById("modalContent").innerHTML = data;
+                    const modalVal = new bootstrap.Modal(document.getElementById("dvModal"));
+                    modalVal.show({
+                        backdrop: "static",
+                        keyboard: false,
+                    });
+
+                    // Execute the JavaScript inside the fetched content after it's added to the DOM
+                    const scripts = document.getElementById("modalContent").getElementsByTagName("script");
+                    for (const script of scripts) {
+                        const newScript = document.createElement("script");
+                        newScript.innerHTML = script.innerHTML;
+                        document.body.appendChild(newScript);
+                    }
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+            });
+        });
+    }
+
+    function setupModalHideEvent() {
+        document.querySelectorAll(".modal").forEach(function (modal) {
+            modal.addEventListener("hidden.bs.modal", function () {
+                modal.removeAttribute("data-bs-backdrop");
+                modal.removeAttribute("data-bs-keyboard");
+                modal.classList.remove("show");
+            });
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        fetchSetup();
+    });
+
+    function _(ids) {
+        return document.getElementById(ids);
+    }
+
+    function _className(className) {
+        return document.getElementsByClassName(className);
+    }
+
+    function qs(ids) {
+        return document.querySelector(ids);
+    }
+
+    function qsAll(ids) {
+        return document.querySelectorAll(ids);
+    }
+
+ </script>
+
+
+
+
+
+<script src=@Url.Content($"~/tools-js/commonCore.js")></script>
+
+<!-- Charts JS -->
+<!--<script src="@Url.Content("~/assets/plugins/chart.js/chart.min.js")"></script>-->
+@*<script src="@Url.Content("~/assets/js/index-charts.js")"></script>*@
+
+<!-- Page Specific JS -->
+<script src="@Url.Content("~/assets/js/app.js")"></script>
+<script src=@Url.Content($"~/tools-js/FormScript.js")></script>

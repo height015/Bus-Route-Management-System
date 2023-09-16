@@ -1,6 +1,5 @@
 ﻿using System.Reflection.Emit;
 using BRMSAPI.Domain;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
