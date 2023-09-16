@@ -1,5 +1,4 @@
-﻿
-@model LocationVM
+﻿@model LocationVM
 @{
     ViewData["Title"] = "Create Location";
     Layout = null;
@@ -50,7 +49,7 @@ else
                                 <div class="col-sm-6 mb-3">
                                     <label for="sectitle">Title<span style="color: red">*</span> </label>
                                     <input type="text" class="form-control" aria-describedby="sectitle"
-                                           asp-for="LocationTitle"  data-error-message="Location Title is required" required>
+                                           asp-for="LocationTitle" data-error-message="Location Title is required" required>
                                     <span asp-frm-validation="LocationTitle" id="LocationTitle"></span>
                                 </div>
                                 <div class="col-sm-6 mb-3">
@@ -101,13 +100,13 @@ else
                             <div class="row pt-2">
                                 <div class="col-sm-6 mb-3">
                                     <label for="secDescription">Description <span style="color: red">*</span> </label>
-                                    <textarea class="form-control" aria-describedby="sectitle" asp-for="LocationDescription"  data-error-message="Description is required" required></textarea>
+                                    <textarea class="form-control" aria-describedby="sectitle" asp-for="LocationDescription" data-error-message="Description is required" required></textarea>
                                     <span asp-frm-validation="LocationDescription" id="describError"></span>
                                 </div>
                                 <div class="col-sm-6 mb-3">
                                     <label for="secDescription">Landmark <span style="color: red">*</span> </label>
                                     <textarea class="form-control" aria-describedby="sectitle"
-                                              asp-for="Landmark"  data-error-message="Landmark is required" required></textarea>
+                                              asp-for="Landmark" data-error-message="Landmark is required" required></textarea>
                                     <span asp-frm-validation="Landmark" id="describError"></span>
                                 </div>
                             </div>
@@ -135,13 +134,13 @@ else
         }
 
         const check = _("btnSave");
-    
+
 
         check.onSavePopupData("frmAdd", "process-add");
 
-       
 
-   
+
+
 
     })();</script>
 

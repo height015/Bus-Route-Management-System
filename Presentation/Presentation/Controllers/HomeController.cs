@@ -18,7 +18,12 @@ namespace Presentation.Controllers
 			return View();
 		}
 
-		public IActionResult Privacy()
+        public IActionResult _Add()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
 		{
 			return View();
 		}
