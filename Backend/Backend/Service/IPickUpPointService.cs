@@ -13,7 +13,7 @@ public interface IPickUpPointService
 
 
 
-    Task<IList<PickUpPoint>> GetAllPickUp();
+    Task<IQueryable<PickUpPoint>> GetAllPickUp();
 
 
     Task<PickUpPointResObj> InsertPickUk(PickUpPoint pickUpPoint);

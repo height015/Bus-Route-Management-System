@@ -1,4 +1,5 @@
 ﻿using System;
+using Backend.Domain.Common;
 using BRMSAPI.Data;
 using BRMSAPI.Domain;
 using Configuration;
@@ -97,7 +98,8 @@ public class BusRepository : IBusService
                 return response;
             }
 
-            var busObj = _busRepository.Delete(busId);
+           
+            var busObj = await _busRepository.DeleteAsync(busId);
 
             if (busObj == null || string.IsNullOrEmpty(busObj))
             {
@@ -120,16 +122,19 @@ public class BusRepository : IBusService
 
     }
 
-    public async Task<List<Bus>> GetAllBuses()
+    public async Task<IQueryable<Bus>> GetAllBuses()
     {
         try
         {
-            return (await _busRepository.Fetch()).ToList();
+            var result = _busRepository.TableNoTracking;
+
+            return await Task.FromResult(result);
         }
         catch (Exception ex)
         {
             ErrorUtilTools.LogErr(ex.StackTrace, ex.Source, ex.Message);
-            return new List<Bus>();
+
+            return new List<Bus>().AsQueryable();
         }
 
 

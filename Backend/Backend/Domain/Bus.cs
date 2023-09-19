@@ -1,13 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Backend.Domain.Common;
 using BRMSAPI.Utility;
 using Configuration;
 using Creative.Core.Extention;
 
 namespace BRMSAPI.Domain;
 
-public class Bus
+public class Bus : ISoftDeletedEntity
 {
     public int BusId { get; set; }
 
@@ -95,8 +96,7 @@ public class Bus
     }
 
     public string DataCreated { get; set; }
-
-
+    public bool Deleted { get; set ; }
 }
 
 

@@ -7,7 +7,7 @@ public interface IBusService
 {
     Task<Bus> GetBusById(int busId);
 
-    Task<List<Bus>> GetAllBuses();
+    Task<IQueryable<Bus>> GetAllBuses();
 
     Task<BusResObj> CreateBus(Bus bus);
 

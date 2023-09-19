@@ -1,12 +1,9 @@
 ﻿
 using BRMSAPI.Domain;
-
 namespace BRMSAPI.Service;
 
 public interface IScheduleServices
 {
-
-   
     Task<ScheduleRespObj> DeleteSchedule(int taskId);
 
    
@@ -16,7 +13,7 @@ public interface IScheduleServices
     Task<Schedule> GetScheduleByName(string type);
 
    
-    Task<IList<Schedule>> GetAllTasks();
+    Task<IQueryable<Schedule>> GetAllTasks();
 
     
     Task<ScheduleRespObj> InsertTask(Schedule task);

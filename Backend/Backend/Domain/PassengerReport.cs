@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Reflection;
+using Backend.Domain.Common;
 
 namespace BRMSAPI.Domain;
 
-public class PassengerReport
+public class PassengerReport : ISoftDeletedEntity
 {
     public int PassengerReportId { get; set; }
 
@@ -37,6 +38,8 @@ public class PassengerReport
 
     public string ServiceTypeLabel
     { get; set; }
+
+    public bool Deleted { get; set; }
 
 }
 

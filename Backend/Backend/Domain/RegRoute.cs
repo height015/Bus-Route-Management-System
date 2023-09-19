@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Backend.Domain.Common;
 
 namespace BRMSAPI.Domain;
 
-public class RegRoute
+public class RegRoute : ISoftDeletedEntity
 {
 
     public RegRoute()
@@ -35,6 +36,9 @@ public class RegRoute
     public int Status { get; set; }
 
     public string PickUpPointIds { get; set; }
+
+    public bool Deleted { get; set; }
+
 
     public ICollection<Bus> Buses { get; set; }
 

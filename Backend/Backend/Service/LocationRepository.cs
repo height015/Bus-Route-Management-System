@@ -39,7 +39,7 @@ public class LocationRepository : ILocationService
 
             }
 
-            var locatin = _locationRepository.Delete(locId);
+            var locatin = await _locationRepository.DeleteAsync(locId);
 
             if (locatin == null || string.IsNullOrEmpty(locatin))
             {
@@ -66,16 +66,16 @@ public class LocationRepository : ILocationService
 
     }
 
-    public async Task<List<Location>> GetAllLocation()
+    public async Task<IQueryable<Location>> GetAllLocation()
     {
         try
         {
-            return (await _locationRepository.Fetch()).ToList();
+            return (await _locationRepository.Fetch());
         }
         catch (Exception ex)
         {
             ErrorUtilTools.LogErr(ex.StackTrace, ex.Source, ex.Message);
-            return new List<Location>();
+            return new List<Location>().AsQueryable();
         }
     }
 

@@ -1,9 +1,10 @@
 ﻿using System;
+using Backend.Domain.Common;
 using Configuration;
 
 namespace BRMSAPI.Domain;
 
-public class Schedule
+public class Schedule : ISoftDeletedEntity
 {
 
     public int ScheduleId { get; set; }
@@ -23,6 +24,9 @@ public class Schedule
     public string ArrivalTime { get; set; }
 
     public string DepertureTime { get; set; }
+
+    public bool Deleted { get; set; }
+
 }
 
 public class ScheduleRespObj

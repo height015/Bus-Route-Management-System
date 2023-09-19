@@ -12,6 +12,9 @@ public class PickUpPointRepository : IPickUpPointService
     private readonly IRepository<PickUpPoint> _pickUpPointRepository;
     private ResponseObj _errorObj;
 
+    protected CancellationTokenSource _cancellationTokenSource ;
+
+
     public PickUpPointRepository(AppDbContext appDbContext)
     {
         _pickUpPointRepository = new Repository<PickUpPoint>(appDbContext);
@@ -38,15 +41,16 @@ public class PickUpPointRepository : IPickUpPointService
                 return response;
             }
 
-            var pickupPoint = _pickUpPointRepository.Delete(pickUpId);
+            var pickupPoint = await  _pickUpPointRepository.DeleteAsync(pickUpId);
 
-            if (pickupPoint == null || string.IsNullOrEmpty(pickupPoint))
+            if (!string.IsNullOrEmpty(pickupPoint))
             {
                 _errorObj.ErrorMessage = "Error Occurred! Could not Complete Process";
                 _errorObj.TechMessage = "Error Occurred! Could not Complete Process";
                 response.ErrorMessage = _errorObj;
                 return response;
             }
+             response.IsSuccessful = true;
 
             return await Task.FromResult(response);
         }
@@ -63,16 +67,16 @@ public class PickUpPointRepository : IPickUpPointService
 
     }
 
-    public async Task<IList<PickUpPoint>> GetAllPickUp()
+    public async Task<IQueryable<PickUpPoint>> GetAllPickUp()
     {
         try
         {
-            return (await _pickUpPointRepository.Fetch()).ToList();
+            return (await _pickUpPointRepository.Fetch());
         }
         catch (Exception ex)
         {
             ErrorUtilTools.LogErr(ex.StackTrace, ex.Source, ex.Message);
-            return new List<PickUpPoint>();
+            return new List<PickUpPoint>().AsQueryable();
         }
     }
 

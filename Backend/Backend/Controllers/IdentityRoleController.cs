@@ -59,7 +59,6 @@ public class IdentityRoleController : ControllerBase
     [HttpGet("list")]
     public virtual async Task<ActionResult> List()
     {
-
         try
         {
             var retVal = _roleManager.Roles.Select(x => new IdentityUserRoleVM
@@ -70,8 +69,6 @@ public class IdentityRoleController : ControllerBase
 
             if (retVal.Count < 1 || retVal == null)
                 return NoContent();
-
-
             return Ok(await Task.FromResult(retVal));
         }
         catch (Exception ex)
@@ -82,17 +79,13 @@ public class IdentityRoleController : ControllerBase
     }
 
     [HttpGet("details-role")]
-   
     public async Task<ActionResult> Details(string Id)
     {
         if (string.IsNullOrEmpty(Id) || Id.Length < 4 )
             return BadRequest(new ApiStatusResponse(HttpStatusCode.BadRequest, $" {Id} can not be empty and must be greater than 3 characters"));
-
         try
         {
-
             var role = await _roleManager.FindByIdAsync(Id);
-
             if (role != null )
             {
                 List<UserVM> member = new List<UserVM>();
@@ -103,7 +96,6 @@ public class IdentityRoleController : ControllerBase
                     var list = await _userManager.IsInRoleAsync(user, role.Name) ? member : nonMember;
                     list.Add(_mapper.Map<UserVM>(user));
                 }
-
                 return Ok(new RoleEditVM
                 {
                     Role = role,
@@ -130,7 +122,6 @@ public class IdentityRoleController : ControllerBase
         try
         {
             IdentityResult result;
-
             foreach (string userId in roleEditVM.AddIds ?? new string[] { })
             {
                 var user = await _userManager.FindByIdAsync(userId);

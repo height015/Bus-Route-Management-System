@@ -1,15 +1,15 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Backend.Domain.Common;
 using BRMSAPI.Utility;
 using Configuration;
 using Creative.Core.Extention;
 
 namespace BRMSAPI.Domain;
 
-public class Location
+public class Location : ISoftDeletedEntity
 {
-
 	public Location()
 	{
 		PickUpPoints = new HashSet<PickUpPoint>();
@@ -46,6 +46,7 @@ public class Location
     [StringLength(50, MinimumLength = 3, ErrorMessage = "Area Label is Required")]
     [Required(AllowEmptyStrings = false)]
     public string AreaLabel { get; set; }
+    public bool Deleted { get; set; }
 
     public ICollection<PickUpPoint> PickUpPoints { get; set; }
 }

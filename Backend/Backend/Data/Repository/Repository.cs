@@ -1,6 +1,7 @@
 ﻿
 
 using System.Linq.Expressions;
+using Backend.Domain.Common;
 using BRMSAPI.Data;
 using Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -22,27 +23,40 @@ public class Repository<T> : IRepository<T> where T : class
 
         public IQueryable<T> TableNoTracking => _appDbContext.Set<T>().AsNoTracking();
 
-        public string Delete(int Id)
+        public async Task<string> DeleteAsync(int Id)
         {
             string message = string.Empty;
             try
             {
             var entity =  _appDbContext.Set<T>().Find(Id);
-            _appDbContext.Set<T>().Remove(entity);
+            switch (entity)
+            {
+                case null:
+                    throw new ArgumentNullException(nameof(entity));
+
+                case ISoftDeletedEntity softDeletedEntity:
+                    softDeletedEntity.Deleted = true;
+                    _appDbContext.Set<T>().Update(entity);
+                    break;
+
+                default:
+                    _appDbContext.Set<T>().Remove(entity);
+                    break;
+            }
+
             _appDbContext.SaveChanges();
             }
             catch (Exception ex)
             {
                  ErrorUtilTools.LogErr(ex.StackTrace, ex.Source, ex.Message);
             }
-            return message;
+            return await Task.FromResult(message);
 
         }
 
-    public string Delete(int[] entitieIds)
-    {
-        string message = string.Empty;
+        public string Delete(int[] entitieIds){
 
+        string message = string.Empty;
         try
         {
             foreach (var itemId in entitieIds)
@@ -50,7 +64,17 @@ public class Repository<T> : IRepository<T> where T : class
                 var entity = _appDbContext.Set<T>().Find(itemId);
                 if (entity != null)
                 {
-                    _appDbContext.Set<T>().Remove(entity);
+
+                    if (entity is ISoftDeletedEntity softDeletedEntity)
+                    {
+                        softDeletedEntity.Deleted = true;
+                        _appDbContext.Set<T>().Update(entity);
+                    }
+                    else
+                    {
+                        _appDbContext.Set<T>().Remove(entity);
+
+                    }
                     _appDbContext.SaveChanges();
                 }
             }
@@ -63,13 +87,13 @@ public class Repository<T> : IRepository<T> where T : class
         }
     }
 
-
-    public async Task<IEnumerable<T>> Fetch()
+        public async Task<IQueryable<T>> Fetch()
         {
-            return await _appDbContext.Set<T>().ToListAsync();
+        var retVal = _appDbContext.Set<T>();
+            return await Task.FromResult(retVal);
         }
 
-        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        public IQueryable<T> Find(Expression<Func<T, bool>> expression)
         {
             return _appDbContext.Set<T>().Where(expression);
         }
@@ -115,6 +139,7 @@ public class Repository<T> : IRepository<T> where T : class
         {
             try
             {
+
             _appDbContext.Set<T>().Update(entity);
             await _appDbContext.SaveChangesAsync();
             return entity;

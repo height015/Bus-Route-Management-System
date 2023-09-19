@@ -38,7 +38,7 @@ public class ScheduleRepository : IScheduleServices
                 response.ErrorMessage = _errorObj;
             }
 
-            var retVal = _scheduleRepository.Delete(scheduleId);
+            var retVal = await  _scheduleRepository.DeleteAsync(scheduleId);
 
             if (!string.IsNullOrEmpty(retVal))
             {
@@ -62,16 +62,16 @@ public class ScheduleRepository : IScheduleServices
 
     }
 
-    public async Task<IList<Schedule>> GetAllTasks()
+    public async Task<IQueryable<Schedule>> GetAllTasks()
     {
         try
         {
-            return (await _scheduleRepository.Fetch()).ToList();
+            return (await _scheduleRepository.Fetch());
         }
         catch (Exception ex)
         {
             ErrorUtilTools.LogErr(ex.StackTrace, ex.Source, ex.Message);
-            return new List<Schedule>();
+            return new List<Schedule>().AsQueryable();
         }
     }
 

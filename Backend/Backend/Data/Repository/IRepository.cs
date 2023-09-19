@@ -15,9 +15,9 @@ public interface IRepository<T> where T : class
 
     string Delete(int[] entitieIds);
 
-    Task<IEnumerable<T>> Fetch();
+    Task<IQueryable<T>> Fetch();
 
-    string Delete(int Id);
+    Task<string> DeleteAsync(int Id);
 
     IQueryable<T> Table { get; }
 

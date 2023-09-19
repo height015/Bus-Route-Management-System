@@ -10,7 +10,7 @@ public interface ILocationService
 
     Task<LocationResObj> DeleteLocation(int pickUpId);
 
-    Task<List<Location>> GetAllLocation();
+    Task<IQueryable<Location>> GetAllLocation();
 
 
     Task<LocationResObj> InsertLocation(Location location);

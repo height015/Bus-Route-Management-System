@@ -10,6 +10,7 @@ using AutoMapper;
 using BRMSAPI.Domain;
 using Service.Contacts;
 using Core;
+using Backend.Utility;
 
 namespace BRMS.Controllers;
 
@@ -20,12 +21,14 @@ public class BaseApiController  : ControllerBase
 
     public readonly UserManager<Passengers> _userManager;
     public readonly IMapper _mapper;
+    private readonly IHttpContextAccessor _accessor;
 
-    public BaseApiController(UserManager<Passengers> userManager, IMapper mapper)
+
+    public BaseApiController(UserManager<Passengers> userManager, IMapper mapper, IHttpContextAccessor accessor)
     {
         _userManager = userManager;
         _mapper = mapper;
-   
+        _accessor = accessor;
     }
 
 
@@ -51,4 +54,7 @@ public class BaseApiController  : ControllerBase
             return new UserVM();
         }
     }
+
+
+
 }

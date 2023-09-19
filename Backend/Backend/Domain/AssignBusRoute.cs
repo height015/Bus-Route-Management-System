@@ -1,7 +1,9 @@
 ﻿using System;
+using Backend.Domain.Common;
+
 namespace BRMSAPI.Domain;
 
-public class AssignBusRoute
+public class AssignBusRoute : ISoftDeletedEntity
 {
     public int AssignBusRouteId { get; set; }
 
@@ -16,5 +18,6 @@ public class AssignBusRoute
     public string BussAssigned { get; set; }
 
     public string DateRegistered { get; set; }
+    public bool Deleted { get; set; }
 }
 

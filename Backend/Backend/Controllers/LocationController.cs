@@ -18,10 +18,15 @@ public class LocationController : BaseApiController
 {
 	private readonly ILocationService _locationService;
 
-    public LocationController(ILocationService locationService, UserManager<Passengers> userManager, IMapper mapper) : base(userManager, mapper)
+    public LocationController(ILocationService locationService, UserManager<Passengers> userManager, IMapper mapper, IHttpContextAccessor accessor) : base(userManager, mapper, accessor)
     {
         _locationService = locationService;
+
     }
+
+
+
+
 
 
     /// <summary>
@@ -74,7 +79,7 @@ public class LocationController : BaseApiController
             }
 
             var locationResult = (await _locationService.GetAllLocation());
-            var isTitleExist = (locationResult).Any(x => x.Title == model?.Title);
+            var isTitleExist = (locationResult).Any(x => x.Title == model.Title);
 
             if (isTitleExist)
             {

@@ -29,6 +29,8 @@ public class RegPickUpPointVM
 
     public int LocationId { get; set; }
     public LocationVM Location { get; set; }
+    public string UniqueCode { get; set; }
+
 
     //public int RegRouteId { get; set; }
     //public RegRoute Route { get; set; }
@@ -36,6 +38,7 @@ public class RegPickUpPointVM
 
 public class PickUpPointVM
 {
+    public int Id { get; set; }
 
     [StringLength(50, MinimumLength = 3, ErrorMessage = "Name is Required")]
     [Required(AllowEmptyStrings = false)]
@@ -51,15 +54,16 @@ public class PickUpPointVM
     [Required(AllowEmptyStrings = false)]
     public string BusStop { get; set; }
 
-    public bool Status { get; set; }
-
     public int ObjectState { get; set; }
 
-    public int StateLevel { get; set; }
+    public int ContentStatus { get; set; }
 
+    public string UniqueCode { get; set; }
+
+    public string Date { get; set; }
+    public bool IsStartOrEndPoint { get; set; }
     public int LocationId { get; set; }
-    public Location Location { get; set; }
-
+    public LocationVM Location { get; set; }
     public int RegRouteId { get; set; }
     public RegRoute Route { get; set; }
 }
