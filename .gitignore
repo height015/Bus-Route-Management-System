@@ -49,3 +49,8 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+/Backend/Backend/Dockerfile
+/Backend/Backend/WeatherForecast.cs
+/Backend/Backend/Controllers/WeatherForecastController.cs
+/Backend/Backend/WeatherForecast.cs
+/Backend/Backend/Controllers/WeatherForecastController.cs
